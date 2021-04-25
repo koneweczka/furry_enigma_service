@@ -1,0 +1,22 @@
+{
+  "name": "furry_enigma_endpoints",
+  "version": "1.0.0",
+  "description": "For endpoints.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koneweczka/furry_enigma_service.git"
+  },
+  "author": "koneweczka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/koneweczka/furry_enigma_service/issues"
+  },
+  "homepage": "https://github.com/koneweczka/furry_enigma_service#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
