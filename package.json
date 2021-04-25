@@ -1,7 +1,7 @@
 {
-  "name": "furry_enigma_endpoints",
+  "name": "konewka-endpoints",
   "version": "1.0.0",
-  "description": "For endpoints.",
+  "description": "For endpoints",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
