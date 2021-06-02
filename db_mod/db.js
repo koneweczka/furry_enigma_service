@@ -5,7 +5,7 @@ const { open } = require('sqlite');
 async function openDB() {
     // open the database
     const db = await open({
-      filename: '/tmp/database.db',
+      filename: '../database.db',
       driver: sqlite3.Database
     });
     // PRIMARY KEY - okresla, ze to jest klucz główny tablicy; a AUTOINCREMENT odpowiada za to, ze przy insercie jak wstawiasz nulla
