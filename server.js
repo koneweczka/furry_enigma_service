@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+//To dodałam:
+const db_mod = require('./db_mod/db.js');
 
 const port = 3000;
 
@@ -13,71 +15,43 @@ app.get('/', (req, res) => {
 
 app.listen(port);
 
-// tu mam zmienną na sztywno na razie:
-let list = [
-    {id: 0, summary: "Posprzątać kuchnię."},
-    {id: 1, summary: "Wynieść śmieci."}
-];
+// Po co mi to teraz??
+// To pobiera pojedyncze zadanie:
+// zrob dla sportu
+// app.get('/list/:id', (req, res) => {
+//     const id = Number(req.params.id);
+//     const task = list.find(task => task.id === id);
+//     res.send(task);
+// });
+
 
 // To pobiera całą listę zadań:
-app.get('/list', (req, res) => {
-    res.send(list);
+app.get('/list', async (req, res) => {
+    const myList = await db_mod.showList();
+        // nie moze byc z pluem bo to castuje a stringa
+    res.send(myList);
 });
-
-// To pobiera pojedyncze zadanie:
-app.get('/list/:id', (req, res) => {
-    const id = Number(req.params.id);
-    const task = list.find(task => task.id === id);
-    res.send(task);
-});
-
-// To tworzy nowe id dla dodawanego zadania:
-function newID() {
-    let i = 0;
-    // in zwraca index tablicy, of zwraca wartosc
-    for (task of list) {
-        console.log(task)
-        // to sie iteruje poki sie nie przerwie
-        if (task.id > i) {
-            i = task.id
-        } 
-    }
-    return i+1
-};
 
 // To ma dodawać do listy:
-app.post('/list', (req, res) => {
+app.post('/list', async (req, res) => {
     console.log(req.body);
-    const id = newID();
-    list.push({id: id, summary: req.body.summary});
-    res.send(list);
+    const summary = req.body.summary
+    const newList = await db_mod.addTask(summary);
+    res.send(newList);
 });
 
-// To jest na usuwanie:
-app.delete('/list/:id', (req, res) => {
+// tego id sie ni daje w body
+app.delete('/list/:id', async (req, res) => {
     const id = Number(req.params.id);
-    const taskIndex = list.findIndex(task => task.id === id);
-    if (taskIndex === -1) {
-        // to jest zabezpieczenie na index = -1
-        res.status(404).send('Index not found.')
-    } else {
-        list.splice(taskIndex, 1);
-        res.send(list);
-    }
+    let removeList = await db_mod.removeTask(id);
+    res.send(removeList);
     //nie moge robic senda i redirecta jednoczesnie
 });
 
 // Test na edycję:
-app.put('/list/:id', (req, res) => {
+app.put('/list/:id', async (req, res) => {
     const id = Number(req.params.id);
-    const task = list.find(task => task.id === id);
-    const taskIndex = list.findIndex(task => task.id === id);
-    if (taskIndex === -1) {
-        // to jest zabezpieczenie na index = -1
-        res.status(404).send('Index not found.')
-    } else {
-        task.summary = req.body.summary
-        list.splice(taskIndex, 1, task);
-        res.send(list);
-    }
-});
+    const summary = req.body.summary;
+    const editedList = await db_mod.editTask(id, summary);
+    res.send(editedList);
+});s

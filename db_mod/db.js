@@ -5,7 +5,7 @@ const { open } = require('sqlite');
 async function openDB() {
     // open the database
     const db = await open({
-      filename: '../database.db',
+      filename: './database.db',
       driver: sqlite3.Database
     });
     // PRIMARY KEY - okresla, ze to jest klucz główny tablicy; a AUTOINCREMENT odpowiada za to, ze przy insercie jak wstawiasz nulla
@@ -15,12 +15,6 @@ async function openDB() {
     // await db.exec('INSERT INTO myTable(id, summary) VALUES(1, "Wynieść śmieci.")')
     return db
 };
-
-// To jest do listy:
-// let list = [
-//     {id: 0, summary: "Posprzątać kuchnię."},
-//     {id: 1, summary: "Wynieść śmieci."}
-// ];
 
 
 // to nie dziala jak definiuje funkcje z function, czemu?
