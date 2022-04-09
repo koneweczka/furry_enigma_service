@@ -17,7 +17,6 @@ app.listen(port);
 
 // Po co mi to teraz??
 // To pobiera pojedyncze zadanie:
-// zrob dla sportu
 // app.get('/list/:id', (req, res) => {
 //     const id = Number(req.params.id);
 //     const task = list.find(task => task.id === id);
@@ -35,6 +34,7 @@ app.get('/list', async (req, res) => {
 // To ma dodawać do listy:
 app.post('/list', async (req, res) => {
     console.log(req.body);
+    // tu mam summary i ono musi być w actionie rpzeazane w api
     const summary = req.body.summary
     const newList = await db_mod.addTask(summary);
     res.send(newList);
@@ -54,4 +54,4 @@ app.put('/list/:id', async (req, res) => {
     const summary = req.body.summary;
     const editedList = await db_mod.editTask(id, summary);
     res.send(editedList);
-});s
+});
